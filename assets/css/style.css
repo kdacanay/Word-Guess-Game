@@ -1,0 +1,34 @@
+#main-header {
+    padding: 50px;
+    width: 100%;
+    text-align: center;
+}
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#title-text  {
+    font-family: 'Lacquer', ;
+    font-weight: bolder;
+    font-size: l100px;
+}
+#title-text-edition {
+    font-family: 'Lacquer';
+}
+
+#wins  {
+    font-family: 'Lacquer';
+}
+
+#guessed {
+    font-family: 'Lacquer';
+}
+
+#chances {
+    font-family: 'Lacquer';
+}
+
+.card-body {
+    font-family: 'Lacquer';
+}
