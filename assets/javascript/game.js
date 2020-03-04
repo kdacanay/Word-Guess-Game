@@ -1,18 +1,36 @@
-//word array to choose from
+//Pseudocode
+//player presses any key to start game
+//cpu picks random word from wordArray as winning word
+//word is hidden and each letter is turned into underscores _
+//player begins with 10 chances, presses lowercase letter key as guess: each wrong guess decreases chances by -1
+//with each guess, letter gets stored in guessedArray, whether it wa correct or incorrect guess
+//correct guess does not decrease chances variable
+//if chances reaches 0, game resets
+
+//if player guesses word correctly within chances limit, wins variable increase by + 1, game resets. 
+
+//bonus, play winning tune to match band/song when win is guessed
+//bonus, play losing horn (price is right horn?) when chances reach 0
+
+//word array for cpu to choose winning word to from
 var wordArray = ["nirvana","pearl jam","soundgarden","alice in chains","in utero", "ten", "evenflow","meat puppets","smashing pumpkins","tool","flannel","doc martens","airwalks","mtv unplugged"];
 var lettersGuessedArray = [];
 var wins = 0;
-var startChances = 10;
-var winningMask = "";
+var Chances = 10;
+var winningWord = " ";
+
 
 //event listener to start new game, reads key press
 window.addEventListener("keypress",onkeypress,false);
 //call start game function
 startGame();
-
+//functions possibly needed:
+//to initialize game and to reset game
 function startGame() {
+//cpu selects random word from wordArray
     selectWord();
-    setWinningMask();
+//takes winning word    
+    wordUnderscores();
     updateWins();
     chances = startChances;
     updateChances();
@@ -92,7 +110,7 @@ function checkForWin() {
       replaceAllOccurences(letter); // mask letters in word
     } else { // if letter is NOT in word
       if (hasLetterBeenUsed(letter) == false) { // letter NOT in word; has not been used
-        guessedLettersArray.push(letter)
+        lettersGuessedArray.push(letter)
         subtractChances();
       } else {
         // letter NOT in word; has already been used
