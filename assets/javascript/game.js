@@ -50,7 +50,7 @@ updateDisplay();
 function resetGame () {
     //if player guesses all words
     if (usedWinningWords.length === wordArray) {
-        championSong.play();
+        // championSong.play();
         usedWinningWords = [];
         wins = 0;
     }
@@ -77,10 +77,10 @@ function resetGame () {
 };
 
 function updateDisplay () {
-    document.getElementById("wins").innerText = wins;
-    document.getElementById("winningWord").innerText = mysteryWord.join("");
-    document.getElementById("remainingChances").innerText = guessesLeft;
-    document.getElementById("guessesSoFar").innerText = guessedLettersArray.join(" ");
+    document.getElementById("wins").innerHTML = wins;
+    document.getElementById("winningWord").innerHTML = mysteryWord.join("");
+    document.getElementById("remainingChances").innerHTML = guessesLeft;
+    document.getElementById("guessesSoFar").innerHTML = guessedLettersArray.join(" ");
 };
 
 document.onkeydown = function(event) {
@@ -102,21 +102,21 @@ function checkForLetter(letter) {
             wins++
             usedWinningWords.push(winningWord);
             console.log(usedWinningWords);
-            winSound.play();
+            // winSound.play();
             updateDisplay();
         }
     }
 }
 if (foundLetter === false) {
     if (guessedLettersArray.includes(letter) === false) {
-        guessedLettersArray.push(lettr)
+        guessedLettersArray.push(letter)
         guessesLeft--
     }
     if (guessesLeft === 0) {
         usedWinningWords.push(winningWord);
         console.log(usedWinningWords);
         mysteryWord = winningWord.split();
-        loseSound.play();
+        // loseSound.play();
     }
 }
 updateDisplay();
