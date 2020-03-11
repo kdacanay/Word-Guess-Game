@@ -9,15 +9,16 @@
     margin-right: auto;
 }
 #title-text  {
-    font-family: 'Lacquer', ;
+    font-family: 'Lacquer';
     font-weight: bolder;
-    font-size: l100px;
+    font-size: 100px;
 }
 #title-text-edition {
     font-family: 'Lacquer';
+    font-size: 20px;
 }
 
-#wins  {
+#win-counter  {
     font-family: 'Lacquer';
 }
 
@@ -37,4 +38,8 @@
 
 .card-body {
     font-family: 'Lacquer';
+}
+.display-text {
+    font-family: 'Lacquer';
+    font-size: 25px;
 }

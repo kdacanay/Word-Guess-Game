@@ -26,8 +26,7 @@ var lettersInWinningWord = [];
 var blanks = 0;
 var blanksSolved = [];
 var wrongGuesses = [];
-var displayImage = "";
-
+var displayImage;
 var winCounter = 0;
 var numGuesses = 10;
 
@@ -35,10 +34,15 @@ startGame();
 
 function startGame() {
     numGuesses = 10;
-    winningWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+    //this picks a random number from wordsArray, matches to imageArray
+    var randomNum = Math.floor(Math.random() * wordsArray.length);
+    winningWord = wordsArray[randomNum];
+    displayImage = images[randomNum];
+    //this splits the winningWord into seperate letters
     lettersInWinningWord = winningWord.split("");
     blanks = lettersInWinningWord.length;
-    displayImage = winningWord;
+    //test function (for my peace of mind)
+    console.log(winningWord);
     //reset
     blanksSolved = [];
     wrongGuesses = [];
@@ -87,6 +91,7 @@ function endRound() {
         alert("Nice, bro! Hey! Sick Airwalks, dude!");
         document.getElementById("win-counter").innerHTML = winCounter;
         startGame();
+        document.getElementById("setImage").src = displayImage;
     }
     else if (numGuesses === 0) {
         alert("Beat, bro! Try again, its cool!");
