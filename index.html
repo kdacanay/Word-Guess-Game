@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lacquer&display=swap" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
   <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+  <script type="text/JavaScript" src="assets/javascript/game.js"></script>
 
   <title>Hangman! The 90s Grunge Edition</title>
 </head>
@@ -27,20 +28,19 @@
       <div class="row">
         <div class="col">
           <div class="card" style="width: 18rem;"> -->
-            <img src="..." class="card-img-top" alt="..." id="photo"/>
+            <img src="assets/images/grungeimage.png" class="card-img-top" alt="..." id="photo"/>
             <div class="card-body"> 
               <h5 class="card-title">Guess the Word!</h5>
               <p class="card-text"></p>
-              <a href="#" class="btn btn-primary" id="Song">Play Song!</a>
             </div>
           </div>
         </div>
         <div class="col">
-          <div class="display-text" id="get-started">Press Any Key To Get Started!</div>
-          <div class="display-text" id="wins">Wins:</div>
-          <div class="display-text" id="winningWord">Mystery Word:</div>
-          <div class="display-text" id="remainingChances">Chances:</div>
-          <div class="display-text" id="wrongGuesses">Letters Guessed:</div>
+          <div class="display-text">Wins: <span  id="wins">0</span></div>
+          <div class="display-text" id="status">Mystery Word:</div>
+          <div class="display-text" id="blanks">Press A Letter To Get Started!</div>
+          <div class="display-text">Chances: <span id="remainingChances">10</span></div>
+          <div class="display-text">Letters Guessed: <span  id="wrongGuesses"> </span></div>
         </div>
       </div>
     </section>
@@ -48,7 +48,7 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script type="text/JavaScript" src="assets/javascript/game.js"></script>
+  
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
   </script>
