@@ -12,7 +12,7 @@
 //bonus, play losing horn (price is right horn?) when chances reach 0
 
 //word array for cpu to choose winning word to from
-var wordArray = ["nirvana", "pearl jam", "smells like teen spirit", "soundgarden", "badmotorfinger",
+var wordsArray = ["nirvana", "pearl jam", "smells like teen spirit", "soundgarden", "badmotorfinger",
 "jeremy", "alice in chains", "dirt", "in utero", "meat puppets", "ten", "smashing pumpkins", 
 "flannel", "doc martens", "airwalks", "mtv unplugged"];
 //images have to match wordArray for random number to match
@@ -20,106 +20,83 @@ var images = ["assets/images/nirvana.jpg", "assets/images/pearljam.jpg", "assets
 "assets/images/badmotorfinger.jpg", "assets/images/jeremy.jpg", "assets/images/aliceinchains.jpg", "assets/images/dirt.jpg", "inutero.jpg",
 "assets/images/meatpuppets.jpg", "assets/images/ten.jpg", "assets/images/smashingpumpkins.jpg", "assets/images/flannel.jpg","assets/images/docmartens.jpg",
 "assets/images/airwalks.jpg", "assets/images/mtvunplugged.jpeg"];
-var alphabet = 'abcdefghijklmnopqrstuvwxyz';
-var wrongGuess = [];
-var blank = "";
-var winningWord;
-var wins = 0;
-var guessesLeft = 10;
-var displayImage;
+var winningWord = "";
+//breakdown winningWord into individual letters
+var lettersInWinningWord = [];
+var blanks = 0;
+var blanksSolved = [];
+var wrongGuesses = [];
+var displayImage = "";
 
+var winCounter = 0;
+var numGuesses = 10;
 
-start ();
+startGame();
 
-function start () {
-
-        var randomNumber = Math.floor(Math.random() * wordArray.length);
-
-        var winningWord = wordArray[randomNumber];
-        var displayImage = images[randomNumber];
-
-        //reset
-        var wrongGuess = [];
-        var guessesLeft = 10;
-        var blank = "";
-
-
-        //correct number of blanks
-        for (var i = 0; i < winningWord.length; i++) {
-            blank += "_" + ""; 
-        }
+function startGame() {
+    numGuesses = 10;
+    winningWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+    lettersInWinningWord = winningWord.split("");
+    blanks = lettersInWinningWord.length;
+    displayImage = winningWord;
+    //reset
+    blanksSolved = [];
+    wrongGuesses = [];
+    //fills blanksSolved array with number of blank
+    for (var i = 0; i < blanks; i++) {
+        blanksSolved.push("_");
+};
+    //resets guesses 
+    document.getElementById("remainingChances").innerHTML = numGuesses;
+    //inserts blanks at beginning of each reset
+    document.getElementById("blanks").innerHTML = blanksSolved.join(" ");
+    //clears wrong guesses
+    document.getElementById("wrong-Guesses").innerHTML = wrongGuesses.join(" ");
 };
 
-//reading key pressed
-document.onkeyup = function(event) {
-    var playerGuess = event.key;
-
-    //populate blanks
-    document.getElementById("blanks").innerHTML = blank;
-    document.getElementById("wrongGuesses").innerHTML = wrongGuess;
-    document.getElementById("status").innerHTML = "Mystery Word:";
-
-    //checks playerGuess lowercase a-z
-    if(alphabet.indexOf(playerGuess) > -1) {
-        checkGuess(playerGuess);
-    } else {
-        alert("Please choose a letter from a-z (no CAPS)");
+function checkLetters (letter) {
+    var letterFound = false;
+    //check if letter is in array
+    for (var i = 0; i < blanks; i++) {
+        if (winningWord[i] === letter) {
+            letterFound = true;
+        }
     }
-    //if guess is in winningWord
-    function checkGuess(playerGuess) {
-            //if yes
-        if (winningWord.indexOf(playerGuess) > -1){
-            for (var i=0; i< winningWord.length; i++) {
-
-            if (winningWord[i] === playerGuess) {
-                displayLetter (playerGuess, i);
-                endgame();
+    if (letterFound) {
+        for (var j = 0; j < blanks; j++) {
+            if(winningWord[j] === letter) {
+                blanksSolved[j] = letter;
             }
-    }
-} else if (wrongGuess.indexOf(playerGuess) === -1) {
-    //push to array
-        wrongGuess.push(playerGuess);
-        document.getElementById("wrongGuesses").innerHTML = wrongGuess;
-        guessesLeft --;
-        document.getElementById("remainingChances").innerHTML = guessesLeft;
-        endgame();
         }
+    } 
+    //if guess is not in word
+    else { 
+        wrongGuesses.push(letter);
+        numGuesses--;
     }
 };
 
-function displayLetter(letter, index) {
-    var newLetter = "";
-    //iteration
-    for (var i = 0; i < blank.length; i++)
+function endRound() {
 
+    document.getElementById("remainingChances").innerHTML = numGuesses;
+    document.getElementById("blanks").innerHTML = blanksSolved.join(" ");
+    document.getElementById("wrong-Guesses").innerHTML = wrongGuesses.join(" ");
 
-        if (i === index) {
-            newLetter += letter;
-
-        } else {
-            newLetter += blank[i];
-        }
-    blank = newLetter;
-
-    document.getElementById("blanks").innerHTML = blank;
+    if (lettersInWinningWord.toString() === blanksSolved.toString()) {
+        winCounter++;
+        alert("Nice, bro! Hey! Sick Airwalks, dude!");
+        document.getElementById("win-counter").innerHTML = winCounter;
+        startGame();
+    }
+    else if (numGuesses === 0) {
+        alert("Beat, bro! Try again, its cool!");
+        startGame();
+    }
 };
-function endGame () {
-	if (guessRemain === 0) {
-		document.getElementById("status").innerHTML = "You lose!";
-		document.getElementById("blanks").innerHTML = "Press key to restart";
-		start ();
 
-	}
-	//correctly guess the word - no blanks left and guesses remain
-	else if (blank.indexOf("_") === -1 && guessesLeft != 0) {
-		document.getElementById("status").innerHTML = "You win!";
-		document.getElementById("blanks").innerHTML = "Press key to restart";
-		document.getElementById("photo").src = displayImage;
-		wins++;
-		document.getElementById("wins").innerHTML = wins;
-		start();
-
-	} else {
-
-	}
-};
+//click listeners
+document.onkeyup = function(event) {
+    var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+    checkLetters(letterGuessed);
+    endRound();
+}
