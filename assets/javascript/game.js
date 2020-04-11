@@ -1,3 +1,4 @@
+
 //Pseudocode
 //player presses any key to start game
 //cpu picks random word from wordArray as winning word
@@ -12,96 +13,249 @@
 //bonus, play losing horn (price is right horn?) when chances reach 0
 
 //word array for cpu to choose winning word to from
-var wordsArray = ["nirvana", "pearl jam", "smells like teen spirit", "soundgarden", "badmotorfinger",
-"jeremy", "alice in chains", "dirt", "in utero", "meat puppets", "ten", "smashing pumpkins", 
-"flannel", "doc martens", "airwalks", "mtv unplugged"];
-//images have to match wordArray for random number to match
-var images = ["assets/images/nirvana.jpg", "assets/images/pearljam.jpg", "assets/images/smells_like_teen_spirit.jpg", "assets/images/soundgarden.jpg",
-"assets/images/badmotorfinger.jpg", "assets/images/jeremy.jpg", "assets/images/aliceinchains.jpg", "assets/images/dirt.jpg", "inutero.jpg",
-"assets/images/meatpuppets.jpg", "assets/images/ten.jpg", "assets/images/smashingpumpkins.jpg", "assets/images/flannel.jpg","assets/images/docmartens.jpg",
-"assets/images/airwalks.jpg", "assets/images/mtvunplugged.jpeg"];
-var winningWord = "";
-//breakdown winningWord into individual letters
+
+
+//---------------------------word array with objects, with attached images-----------------------------------------------
+
+
+$(document).ready(function() {
+
+var wordsArray = [
+    {   word: "nirvana", 
+        image: "assets/images/nirvana.jpg"
+    },
+    {   word: "pearljam", 
+        image: "assets/images/pearljam.jpg"
+    },
+    {   word: "smells like teen spirit",
+        image: "assets/images/smells_like_teen_spirit.jpg",
+    },
+    {   word: "soundgarden", 
+        image: "assets/images/soundgarden.jpg"
+    },
+    {
+        word: "badmotorfinger",
+        image: "assets/images/badmotorfinger.jpg"
+    },
+    {
+        word: "jeremy",
+        image: "assets/images/jeremy.jpg",
+    },
+    {
+        word: "alice in chains",
+        image: "assets/images/aliceinchains.jpg"
+    },
+    {
+        word:  "dirt",
+        image: "assets/images/dirt.jpg"
+    },
+    {
+        word: "in utero",
+        image: "assets/images/inutero.jpg"
+    },
+    {
+        word: "meat puppets",
+        image: "assets/images/meatpuppets.jpg"
+    },
+    {
+        word: "ten",
+        image: "assets/images/ten.jpg"
+    },
+    {
+        word: "smashing pumpkins",
+        image: "assets/images/smashingpumpkins.jpg"
+    },
+    {
+        word: "flannel",
+        image: "assets/images/flannel.jpg"
+    },
+    {
+        word: "doc martens",
+        image:  "assets/images/docmartens.jpg"
+    },
+    {
+        word: "airwalks",
+        image: "assets/images/airwalks.jpg",
+    },
+    {
+        word: "mtv unplugged",
+        image: "assets/images/mtvunplugged.jpeg" 
+    }
+];
+
+
+//---------variables-------------------------------------
 var lettersInWinningWord = [];
+var winningWord = "";
 var blanks = 0;
 var blanksSolved = [];
 var wrongGuesses = [];
 var displayImage;
 var winCounter = 0;
 var numGuesses = 10;
+var pauseGame = false;
 
+//----------runs at load up------------------------------
 startGame();
 
 function startGame() {
+    
+    //-----clears update (card title)----------------------
+    $("#card-title").html("");
+
+    $("#blanks").html("Press the Space Bar to Start Game!");
+    //--------sets first image to default image-----------------
+    $("#setImage").attr("src", "assets/images/grungeimage.png")
+    
+    //--------------sets number of guesses to 11 because pressing space bar to start 
+    //---------------reduces chances -1 -------------------------------
+    numGuesses = 11;
+    pauseGame = true;
+    winCounter = 0;
+
+    //---------detects space bar ----------------------
+    document.body.onkeyup = function(event) {
+        if (event.keyCode === 32) {
+        $("#remainingChances").html("11");
+        reset();
+    } 
+};
+}
+
+function reset() {
+
+    //---------pause all audio when round starts----------
+    document.getElementById("winnerAudio").pause();
+    document.getElementById("loserAudio").pause();
+    document.getElementById("finalAudio").pause();
     numGuesses = 10;
-    //this picks a random number from wordsArray, matches to imageArray
+    pauseGame = false;
+    
+    //---------set to start image and message-------------
+    $("#setImage").attr("src", "assets/images/grungeimage.png");
+    $(".card-title").html("Guess the Word!");
+
+    
+    //----------this picks a random number from wordsArray, matches to image------------------
     var randomNum = Math.floor(Math.random() * wordsArray.length);
-    winningWord = wordsArray[randomNum];
-    displayImage = images[randomNum];
-    //this splits the winningWord into seperate letters
+    winningWord = wordsArray[randomNum].word;
+    displayImage = wordsArray[randomNum].image;
+    
+    //----------this splits the winningWord into seperate letters-----------------------
     lettersInWinningWord = winningWord.split("");
     blanks = lettersInWinningWord.length;
-    //test function (for my peace of mind)
+    
+    //-----------test function (for my peace of mind)-----------------------
     console.log(winningWord);
-    //reset
+    
+    //--------------reset------------------------
     blanksSolved = [];
     wrongGuesses = [];
-    //fills blanksSolved array with number of blank
+    
+//---------fills blanksSolved array with number of blank------------------------
     for (var i = 0; i < blanks; i++) {
-        blanksSolved.push("_");
-};
-    //resets guesses 
+        if (winningWord[i] === " ") {
+            blanksSolved.push(" ")
+        } else {
+            blanksSolved.push("_");
+        }
+    };
+
+    //-----------resets guesses---------------------------------- 
     document.getElementById("remainingChances").innerHTML = numGuesses;
-    //inserts blanks at beginning of each reset
+    
+    //-------------inserts blanks at beginning of each reset-----------------
     document.getElementById("blanks").innerHTML = blanksSolved.join(" ");
-    //clears wrong guesses
+    
+    //-------------clears wrong guesses------------------------------
     document.getElementById("wrong-Guesses").innerHTML = wrongGuesses.join(" ");
 };
 
-function checkLetters (letter) {
+//-------main game logic------------------------
+function checkLetters(letter) {
+
     var letterFound = false;
+    
     //check if letter is in array
     for (var i = 0; i < blanks; i++) {
         if (winningWord[i] === letter) {
             letterFound = true;
         }
     }
+    
     if (letterFound) {
         for (var j = 0; j < blanks; j++) {
-            if(winningWord[j] === letter) {
+            if (winningWord[j] === letter) {
                 blanksSolved[j] = letter;
             }
         }
-    } 
+    }
+    
     //if guess is not in word
-    else { 
+    else {
         wrongGuesses.push(letter);
         numGuesses--;
     }
 };
 
-function endRound() {
 
-    document.getElementById("remainingChances").innerHTML = numGuesses;
-    document.getElementById("blanks").innerHTML = blanksSolved.join(" ");
-    document.getElementById("wrong-Guesses").innerHTML = wrongGuesses.join(" ");
-
-    if (lettersInWinningWord.toString() === blanksSolved.toString()) {
-        winCounter++;
-        alert("Nice, bro! Hey! Sick Airwalks, dude!");
-        document.getElementById("win-counter").innerHTML = winCounter;
-        startGame();
-        document.getElementById("setImage").src = displayImage;
-    }
-    else if (numGuesses === 0) {
-        alert("Beat, bro! Try again, its cool!");
-        startGame();
-    }
-};
-
-//click listeners
-document.onkeyup = function(event) {
+//-----------click listeners checks user input for win/loss---------------------
+document.onkeyup = function (event) {
     var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
     checkLetters(letterGuessed);
     endRound();
 }
+
+
+//---------function runs after all letters guessed correctly or chances reach 0---------------------
+function endRound() {
+
+    pauseGame = false;
+    
+
+    //-----------display in html-------------------------------
+    document.getElementById("remainingChances").innerHTML = numGuesses;
+    document.getElementById("blanks").innerHTML = blanksSolved.join(" ");
+    document.getElementById("wrong-Guesses").innerHTML = wrongGuesses.join(" ");
+
+
+    //----------if user guesses letters correctly--------------------
+    if (lettersInWinningWord.toString() === blanksSolved.toString()) {
+
+        //-----adds 1 to win--------------
+        winCounter++;
+        
+
+        //------reveals winning word---------------------
+        $(".card-title").html("The Winning Word Was: "+ winningWord);
+        document.getElementById("win-counter").innerHTML = winCounter;
+        
+
+        //------------------displays matching image to correct word---------------------
+        document.getElementById("setImage").src = displayImage;
+
+
+        //----------------plays winning audio--------------------
+        document.getElementById("winnerAudio").play();
+        setTimeout (reset, 6000) 
+    
+
+        //---------if guesses reach 0---------------------------------
+        } else if (numGuesses === 0) {
+        $("#blanks").html("GAME OVER!")
+        $(".card-title").html("Booooo!!");
+        document.getElementById("loserAudio").play();
+        $("#setImage").attr("src", "assets/images/gameover.jpg");
+        setTimeout (startGame, 8000);
+    
+    
+        //--------if wins reach 10------------------------------
+        } else if (winCounter === 10) {
+        $("#blanks").html("Nice! You're Pretty good! You want to put on some MudHoney??");
+        $(".card-title").html("We have a winner!");
+        $("#setImage").attr("src", "assets/images/youwin.jpg");
+        document.getElementById("finalAudio").play();
+        setTimeout (startGame, 10000);
+    }
+};
+})

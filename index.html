@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lacquer&display=swap" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
   <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
-  
+
 
   <title>Hangman! The 90s Grunge Edition</title>
 </head>
@@ -28,19 +28,22 @@
       <div class="row">
         <div class="col">
           <div class="card" style="width: 18rem;"> -->
-            <img src="assets/images/grungeimage.png" class="card-img-top" id="setImage"/>
-            <div class="card-body"> 
+            <img src="assets/images/grungeimage.png" class="card-img-top" id="setImage" />
+            <div class="card-body">
               <h5 class="card-title">Guess the Word!</h5>
+              <audio id="winnerAudio" src="assets/audio/431180__chiptraxxx__074-grungy-guitar-loop.wav"></audio>
+              <audio id="loserAudio" src="assets/audio/412427__florianreichelt__fail-sound-effect-accoustic-guitar.wav"></audio>
+              <audio id="finalAudio" src="assets/audio/tecmosuperbowlending.mp3"></audio>
               <p class="card-text"></p>
             </div>
           </div>
         </div>
         <div class="col">
-          <div class="display-text">Wins: <span  id="win-counter">0</span></div>
+          <div class="display-text">Wins: <span id="win-counter">0</span></div>
           <div class="display-text" id="status">Mystery Word:</div>
           <div class="display-text" id="blanks">Press A Letter To Get Started!</div>
-          <div class="display-text">Chances: <span id="remainingChances">10</span></div>
-          <div class="display-text">Letters Guessed: <span  id="wrong-Guesses"> </span></div>
+          <div class="display-text">Chances: <span id="remainingChances"></span></div>
+          <div class="display-text">Letters Guessed: <span id="wrong-Guesses"> </span></div>
         </div>
       </div>
     </section>
@@ -48,10 +51,11 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script type="text/JavaScript" src="assets/javascript/game.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-  </script>
+  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+  <script type="text/JavaScript" src="assets/javascript/game.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
   </script>

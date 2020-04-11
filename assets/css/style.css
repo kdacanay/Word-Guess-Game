@@ -3,22 +3,30 @@
     width: 100%;
     text-align: center;
 }
+
 .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
-#title-text  {
+
+#title-text {
     font-family: 'Lacquer';
     font-weight: bolder;
     font-size: 100px;
-}
-#title-text-edition {
-    font-family: 'Lacquer';
-    font-size: 20px;
+    color: #565F69;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
-#win-counter  {
+#title-text-edition {
+    font-family: 'Lacquer';
+    font-weight: bolder;
+    font-size: 40px;
+    color: #364F69;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+#win-counter {
     font-family: 'Lacquer';
 }
 
@@ -29,9 +37,11 @@
 #chances {
     font-family: 'Lacquer';
 }
+
 #get-started {
     font-family: 'Lacquer';
 }
+
 #wordToGuess {
     font-family: 'Lacquer';
 }
@@ -39,7 +49,12 @@
 .card-body {
     font-family: 'Lacquer';
 }
+
 .display-text {
     font-family: 'Lacquer';
     font-size: 25px;
+}
+
+body {
+    background-color: #79B0E8;
 }
