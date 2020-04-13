@@ -40,5 +40,4 @@ Choose a theme for your game! In the demo, we picked an 80s theme: 80s questions
 * Don't forget to place your global variables and functions above your object.
 * Remember: global variables, then objects, then calls.
 
-
-
+As with all projects, I began by pseudocoding a possible solution.  I starte with an array of mystery words, each mystery word is an object with a matching image.  Then I made several variables to be used throughout the game.  I used JQeury selectors to detect the user selections.  A random number is picked to decide which word is used first using Math.random method. Ater each word is picked, the word's letters is split (using .split("")), and then those letters become blanks.  When a letter is selected, a for loop is ran to check if a blank letter is solved or not, if solved a blank reveals to be a letter or the letter is pushed to the wrongGuesses array, which is also displayed.  User has 10 chances to guess the word.  If guessed within the 10 chances, an image of the band or one related to the answer ,is displayed along with a grunge audio file is played (obviously, i had problems with copyrights to use the bands actual song).  An additional audio file is played if user: runs out of chances, or answers 10 words correctly.  
